@@ -1,0 +1,94 @@
+body {
+  background-color: #44d1ba;
+  font-family: Arial, sans-serif;
+}
+
+
+
+.formulario{
+    border: 2px solid #0e0d0d;      /* Encierra con un borde sólido */
+    border-radius: 15px;         /* Bordes redondeados */
+    padding: 20px;               /* Espacio interno */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.2); /* Sombra para profundidad */
+    background-color: #fff;      /* Color de fondo */
+    max-width: 400px;            /* Ancho máximo */
+    margin: 20px auto;           /* Centrar en la página */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.container-content {
+  width: 300px;
+  margin: 0 auto;
+}
+
+
+
+
+.my-button{
+  border: none;
+  background: lightblue;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1.5em;
+  margin-right: 150px;
+}
+
+.my-button:hover{
+  background: dodgerblue;
+}
+.my-button:active{
+  background: cornflowerblue;
+}
+
+h1 {
+  margin-bottom: 8px;
+  margin-right: 200px;
+}
+
+p {
+  margin-bottom: 25px;
+  color: #0a0101;
+  margin-right: 150px;
+}
+
+.first-input {
+  width: 320px;
+  height: 35px;
+  margin-right: 60px;
+}
+
+.second-input {
+  width: 320px;
+  height: 35px;
+  margin-right: 60px;
+}
+
+.third-input {
+  width: 320px;
+  height: 35px;
+  margin-right: 60px;
+}
+
+.fourth-input {
+  width: 320px;
+  height: 35px;
+  margin-right: 60px;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+  height: 5px;
+  margin-left: 600px;
+  top: -30px;
+}
