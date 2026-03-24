@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DOM List</title>
+    </head>
+    <body>
+        <ol id="list"></ol>
+        <button id = "btn-add">Add</button>
+        <button id = "btn-clean">Clean</button>
+
+
+        <script>
+            const list = document.getElementById("list");
+            const btnAdd = document.getElementById ("btn-add");
+            const btnClean = document.getElementById ("btn-clean");
+
+            btnAdd.addEventListener ("click", function(){
+                const item = document.createElement ("li");
+                item.innerHTML = "Elemento";
+                list.appendChild (item);
+            });
+
+            btnClean.addEventListener("click", function(){
+                list.innerHTML = "";
+            })
+
+            console.log("Hola")
+
+        </script>
+    </body>
+</html>

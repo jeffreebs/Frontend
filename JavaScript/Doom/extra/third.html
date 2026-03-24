@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tasks</title>
+    </head>
+    <body>
+        <input type = "text" id = "input" placeholder="Write the task">
+        <button id = "task">Add task</button>
+        <ul id="list"></ul>
+
+
+        <script>
+            const input = document.getElementById("input");
+            const btnShow = document.getElementById("task");
+            const list = document.getElementById("list"); 
+
+
+            btnShow.addEventListener ("click", function(){
+                const li = document.createElement("li");
+                li.innerHTML= input.value;
+
+
+                const btnDelete= document.createElement("button");
+                btnDelete.innerHTML= "Eliminar";
+
+
+            btnDelete.addEventListener("click", function(){
+                list.removeChild(li);
+            })
+                li.appendChild(btnDelete);
+                list.appendChild(li);
+
+                input.value = "";
+            });
+        </script>
+    </body>
+</html>
