@@ -20,7 +20,18 @@ btnlogin.addEventListener("click", async function() {
         return  
     }
 
-    localStorage.setItem("usuario", JSON.stringify(usuario))
+    const usuarioCompleto = {
+    id: usuario.id,
+    name: usuario.name,
+    data: {
+        correo: usuario.data.correo,
+        contrasena: usuario.data.contrasena,
+        direccion: usuario.data.direccion
+    }
+}
+
+    localStorage.setItem("usuario", JSON.stringify(usuarioCompleto))
+    window.location.href = "request_dom03.html"
     mensaje.textContent = `Bienvenido ${usuario.name}!`
 
 })

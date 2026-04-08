@@ -1,7 +1,7 @@
 const usuario = JSON.parse (localStorage.getItem("usuario"))
 
 if (usuario === null) {
-    window.location.href = "request_dom03.html"
+    window.location.href = "request_dom02.html"
 }
 
 
@@ -21,5 +21,5 @@ contenido.innerHTML = `
 btnLogout.addEventListener("click",function(){
     localStorage.removeItem("usuario")
 
-    window.location.href = "request_dom03.html"
+    window.location.href = "request_dom02.html"
 })

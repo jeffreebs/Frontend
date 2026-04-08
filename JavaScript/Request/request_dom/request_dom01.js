@@ -13,8 +13,18 @@ btnRegistro.addEventListener("click", async function() {
     const direccion = inputDireccion.value
 
     const usuario = await crearUsuario(nombre, email, password, direccion)
+    const usuarioCompleto = {
+    id: usuario.id,
+    name: nombre,
+    data: {
+        correo: email,
+        contrasena: password,
+        direccion: direccion
+    }
+}
     alert(`Usuario creado correctamente! Tu id es ${usuario.id}`)
-    localStorage.setItem("usuario", JSON.stringify(usuario))
+    localStorage.setItem("usuario", JSON.stringify(usuarioCompleto))
+    window.location.href = "request_dom03.html"
 })
 
 async function crearUsuario(nombre, correo, contrasena, direccion) {

@@ -6,7 +6,11 @@ async function getUser (id){
         const data = response.data
             console.log(data)
     } catch (error) {
-        console.log(`Error: usuario con id ${id} no encontrado`)
+        if (error.response?.status === 404) {
+            console.log(`Error: usuario con id ${id} no encontrado`)
+        } else {
+            console.log(`Error de red o servidor: ${error.message}`)
+        }
     }
             
 }
