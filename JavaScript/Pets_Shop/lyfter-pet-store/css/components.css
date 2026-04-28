@@ -95,7 +95,7 @@
 
 .btn--outline {
   background-color: transparent;
-  border: 2px solid var(--primary);
+  border: 0.125rem solid var(--primary);
   color: var(--primary);
 }
 
@@ -135,7 +135,7 @@
 .form-group textarea,
 .form-group select {
   padding: 0.65rem 0.9rem;
-  border: 1px solid var(--border);
+  border: 0.0625rem solid var(--border);
   border-radius: var(--radius);
   font-family: 'Poppins', sans-serif;
   font-size: 0.95rem;
@@ -191,7 +191,7 @@
 
 .footer {
   background-color: var(--bg-white);
-  border-top: 1px solid var(--border);
+  border-top: 0.0625rem solid var(--border);
   padding: 1.5rem 2rem;
   text-align: center;
   font-size: 0.85rem;

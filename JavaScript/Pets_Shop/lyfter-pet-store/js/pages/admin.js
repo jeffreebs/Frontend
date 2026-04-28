@@ -21,13 +21,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// ===== PANEL ADMIN =====
+
 
 async function loadAdminPanel() {
   try {
     const products = await getProducts();
     renderProductsTable(products);
     await loadStats(products);
+    await loadBillsTable();
   } catch (error) {
     showError("add-error", "Error al cargar los productos.");
   }
@@ -44,15 +45,52 @@ async function loadStats(products) {
   try {
     const bills = await apiFetch("/bills");
     const billList = bills.data || bills;
-
     document.getElementById("stat-bills").textContent = billList.length;
-
     const revenue = billList.reduce((acc, bill) => acc + Number(bill.total), 0);
-    document.getElementById("stat-revenue").textContent =
-      `₡${revenue.toLocaleString()}`;
+    document.getElementById("stat-revenue").textContent = `₡${revenue.toLocaleString()}`;
   } catch {
     document.getElementById("stat-bills").textContent = "0";
     document.getElementById("stat-revenue").textContent = "₡0";
+  }
+}
+
+async function loadBillsTable() {
+  const tbody = document.getElementById("bills-table-body");
+  const billsEmpty = document.getElementById("bills-empty");
+  const billsError = document.getElementById("bills-error");
+
+  tbody.innerHTML = "";
+  billsEmpty.style.display = "none";
+  billsError.style.display = "none";
+
+  try {
+    const bills = await apiFetch("/bills");
+    const billList = bills.data || bills;
+
+    if (billList.length === 0) {
+      billsEmpty.style.display = "flex";
+      return;
+    }
+
+    billList.forEach((bill) => {
+      const row = document.createElement("tr");
+      const fecha = bill.created_at
+        ? new Date(bill.created_at).toLocaleDateString("es-CR")
+        : "—";
+
+      row.innerHTML = `
+        <td>${bill.id}</td>
+        <td>${bill.user_id || "—"}</td>
+        <td>${fecha}</td>
+        <td>₡${Number(bill.total).toLocaleString()}</td>
+        <td>${bill.status || "Completada"}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+  } catch (error) {
+    console.error("Error cargando ventas:", error);
+    billsError.style.display = "flex";
   }
 }
 
@@ -78,18 +116,8 @@ function renderProductsTable(products) {
       <td>${product.category || "—"}</td>
       <td>${product.stock}</td>
       <td style="display:flex; gap:0.5rem;">
-        <button
-          class="btn btn--outline"
-          onclick="redirectTo('edit-product.html?id=${product.id}')"
-        >
-          Editar
-        </button>
-        <button
-          class="btn btn--danger"
-          onclick="handleDeleteProduct(${product.id}, '${product.name}')"
-        >
-          Eliminar
-        </button>
+        <button class="btn btn--outline" onclick="redirectTo('edit-product.html?id=${product.id}')">Editar</button>
+        <button class="btn btn--danger" onclick="handleDeleteProduct(${product.id}, '${product.name}')">Eliminar</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -112,19 +140,20 @@ async function handleAddProduct() {
     showError("add-error", "El nombre debe tener al menos 3 caracteres.");
     return;
   }
-
   if (!isValidPrice(price)) {
     showError("add-error", "El precio debe ser un número mayor a 0.");
     return;
   }
-
   if (!isValidStock(stock)) {
     showError("add-error", "El stock debe ser un número entero mayor o igual a 0.");
     return;
   }
-
   if (!sku) {
     showError("add-error", "El SKU es obligatorio.");
+    return;
+  }
+  if (imageUrl && !isValidUrl(imageUrl)) {
+    showError("add-error", "La URL de la imagen no es válida.");
     return;
   }
 
@@ -132,8 +161,7 @@ async function handleAddProduct() {
 
   try {
     await createProduct({
-      name,
-      description,
+      name, description,
       price: Number(price),
       category,
       image_url: imageUrl,
@@ -175,7 +203,7 @@ function clearAddForm() {
   document.getElementById("add-sku").value = "";
 }
 
-// ===== EDITAR PRODUCTO =====
+
 
 async function loadEditProduct() {
   guardAdmin();
@@ -225,14 +253,16 @@ async function handleSaveProduct(productId) {
     showError("edit-error", "El nombre debe tener al menos 3 caracteres.");
     return;
   }
-
   if (!isValidPrice(price)) {
     showError("edit-error", "El precio debe ser un número mayor a 0.");
     return;
   }
-
   if (!isValidStock(stock)) {
     showError("edit-error", "El stock debe ser un número entero mayor o igual a 0.");
+    return;
+  }
+  if (imageUrl && !isValidUrl(imageUrl)) {
+    showError("edit-error", "La URL de la imagen no es válida.");
     return;
   }
 
@@ -240,8 +270,7 @@ async function handleSaveProduct(productId) {
 
   try {
     await updateProduct(productId, {
-      name,
-      description,
+      name, description,
       price: Number(price),
       category,
       image_url: imageUrl,
@@ -249,10 +278,7 @@ async function handleSaveProduct(productId) {
     });
 
     showSuccess("edit-success", "✅ Producto actualizado exitosamente.");
-
-    setTimeout(() => {
-      redirectTo("admin.html");
-    }, 1500);
+    setTimeout(() => redirectTo("admin.html"), 1500);
 
   } catch (error) {
     showError("edit-error", "Error al actualizar el producto.");
@@ -264,7 +290,6 @@ async function handleSaveProduct(productId) {
 function setupNavbar() {
   const navUser = document.getElementById("nav-user");
   const navUsername = document.getElementById("nav-username");
-
   if (navUser) navUser.style.display = "list-item";
   if (navUsername) navUsername.textContent = `Usuario: ${getUserRole()}`;
 }

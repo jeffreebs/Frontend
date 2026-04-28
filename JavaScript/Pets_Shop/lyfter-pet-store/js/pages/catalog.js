@@ -23,12 +23,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function loadProducts() {
+  showLoadingState();
+
   try {
     allProducts = await getProducts();
+
+    if (allProducts.length === 0) {
+      showEmptyState();
+      return;
+    }
+
     populateCategories(allProducts);
     renderProducts(allProducts);
+
   } catch (error) {
-    showEmptyState();
+    console.error("Error cargando productos:", error);
+    showErrorState();
   }
 }
 
@@ -180,4 +190,20 @@ function setupNavbar() {
     if (navAdmin) navAdmin.style.display = "none";
     if (navCart) navCart.style.display = "none";
   }
+}
+
+function showLoadingState() {
+  const grid = document.getElementById("products-grid");
+  const emptyState = document.getElementById("empty-state");
+  const errorState = document.getElementById("error-state");
+  if (grid) grid.style.display = "none";
+  if (emptyState) emptyState.style.display = "none";
+  if (errorState) errorState.style.display = "none";
+}
+
+function showErrorState() {
+  const grid = document.getElementById("products-grid");
+  const errorState = document.getElementById("error-state");
+  if (grid) grid.style.display = "none";
+  if (errorState) errorState.style.display = "flex";
 }

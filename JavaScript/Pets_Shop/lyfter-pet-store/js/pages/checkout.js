@@ -70,13 +70,13 @@ async function handleCheckout() {
     return;
   }
 
-  if (!billingAddress) {
-    showError("checkout-error", "Por favor ingresá tu dirección.");
+  if (!isValidAddress(billingAddress)) {
+    showError("checkout-error", "La dirección debe tener al menos 10 caracteres.");
     return;
   }
 
-  if (!billingTaxId) {
-    showError("checkout-error", "Por favor ingresá tu cédula o RUC.");
+  if (!isValidTaxId(billingTaxId)) {
+    showError("checkout-error", "Cédula inválida. Usá el formato 1-2345-6789 o 9 dígitos.");
     return;
   }
 
@@ -126,13 +126,13 @@ function renderConfirmation() {
 
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td style="padding:0.65rem 1rem; border-bottom:1px solid var(--border);">
+      <td style="padding:0.65rem 1rem; border-bottom:0.0625rem solid var(--border);">
         ${item.name}
       </td>
-      <td style="padding:0.65rem 1rem; border-bottom:1px solid var(--border); text-align:center;">
+      <td style="padding:0.65rem 1rem; border-bottom:0.0625rem solid var(--border); text-align:center;">
         ${item.quantity}
       </td>
-      <td style="padding:0.65rem 1rem; border-bottom:1px solid var(--border); text-align:right;">
+      <td style="padding:0.65rem 1rem; border-bottom:0.0625rem solid var(--border); text-align:right;">
         ₡${subtotal.toLocaleString()}
       </td>
     `;

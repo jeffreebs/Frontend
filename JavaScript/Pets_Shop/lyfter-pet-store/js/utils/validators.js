@@ -27,3 +27,12 @@ function isValidUrl(url) {
     return false;
   }
 }
+
+function isValidTaxId(taxId) {
+  const regex = /^\d{9,12}$|^\d{1}-\d{4}-\d{4}$/;
+  return regex.test(taxId.trim());
+}
+
+function isValidAddress(address) {
+  return address.trim().length >= 10;
+}
