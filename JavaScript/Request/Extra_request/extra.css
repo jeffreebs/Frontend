@@ -1,0 +1,83 @@
+/* estilos que ya tenías */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 400px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:disabled {
+    background-color: #ccc;    
+    cursor: not-allowed;        
+}
+
+#mensaje {
+    margin-top: 12px;
+    font-size: 14px;
+    color: red;
+    text-align: center;
+}
+
+
+#controles {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-top: 20px;
+}
+
+#controles button {
+    width: auto;      
+    margin: 0;
+}
+
+#pagina-actual {
+    font-size: 14px;
+    color: #666;
+}
+
+#lista p {
+    padding: 10px;
+    border-bottom: 1px solid #eee;  
+    margin: 0;
+}
+
+#lista p:last-child {
+    border-bottom: none;  
+}

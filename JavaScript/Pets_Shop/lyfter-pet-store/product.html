@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Producto — Lyfter Pet Store</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages/catalog.css" />
+</head>
+<body>
+
+  
+  <nav class="navbar">
+    <a href="index.html" class="navbar__logo">🐾 Lyfter Pet Store</a>
+    <ul class="navbar__links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="catalog.html" class="active">Productos</a></li>
+      <li id="nav-admin" style="display:none"><a href="admin.html">Administración</a></li>
+      <li id="nav-cart" style="display:none">
+        <a href="cart.html" class="cart-icon">
+          🛒
+          <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+      </li>
+      <li id="nav-user" style="display:none"><span id="nav-username"></span></li>
+      <li id="nav-logout" style="display:none"><a href="#" id="btn-logout">Cerrar sesión</a></li>
+      <li id="nav-login"><a href="login.html" class="btn btn--primary">Iniciar sesión</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    
+    <div class="empty-state" id="loading-state">
+      <div class="empty-state__icon">⏳</div>
+      <p class="empty-state__title">Cargando producto...</p>
+    </div>
+
+    
+    <div class="product-detail" id="product-detail" style="display:none">
+
+      <img
+        class="product-detail__image"
+        id="product-image"
+        src=""
+        alt="Imagen del producto"
+      />
+
+      <div class="product-detail__info">
+        <p class="product-detail__category" id="product-category"></p>
+        <h1 class="product-detail__name" id="product-name"></h1>
+        <p class="product-detail__price" id="product-price"></p>
+        <p class="product-detail__description" id="product-description"></p>
+        <p class="product-detail__stock" id="product-stock"></p>
+
+        <p class="error-msg" id="product-error"></p>
+        <p class="success-msg" id="product-success"></p>
+
+        <div class="product-detail__actions">
+          <button
+            class="btn btn--primary"
+            id="btn-add-cart"
+            data-label="Agregar al carrito"
+          >
+            Agregar al carrito
+          </button>
+          <a href="catalog.html" class="btn btn--outline">Volver al catálogo</a>
+        </div>
+      </div>
+
+    </div>
+
+    
+    <div class="empty-state" id="error-state" style="display:none">
+      <div class="empty-state__icon">❌</div>
+      <h2 class="empty-state__title">Producto no encontrado</h2>
+      <p class="empty-state__subtitle">El producto que buscás no existe o fue eliminado.</p>
+      <a href="catalog.html" class="btn btn--primary" style="width:auto; margin-top:1rem">
+        Volver al catálogo
+      </a>
+    </div>
+
+  </main>
+
+  
+  <footer class="footer">
+    <p>© 2025 Lyfter Pet Store — Todos los derechos reservados.</p>
+  </footer>
+
+  
+  <script src="js/utils/session.js"></script>
+  <script src="js/utils/ui.js"></script>
+  <script src="js/utils/mock-data.js"></script>
+  <script src="js/api/config.js"></script>
+  <script src="js/api/products.api.js"></script>
+  <script src="js/api/cart.api.js"></script>
+  <script src="js/pages/product.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compra finalizada — Lyfter Pet Store</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  
+  <nav class="navbar">
+    <a href="index.html" class="navbar__logo">🐾 Lyfter Pet Store</a>
+    <ul class="navbar__links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="catalog.html">Productos</a></li>
+      <li id="nav-user" style="display:none"><span id="nav-username"></span></li>
+      <li id="nav-logout" style="display:none"><a href="#" id="btn-logout">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section style="max-width:45rem; margin:4rem auto; padding:0 2rem;">
+
+      <div class="card" style="padding:3rem; text-align:center;">
+
+        
+        <div style="
+          width:5rem;
+          height:5rem;
+          border-radius:50%;
+          border:0.1875rem solid var(--primary);
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          margin:0 auto 1.5rem;
+          font-size:2rem;
+        ">
+          ✅
+        </div>
+
+        <h1 style="font-size:1.8rem; font-weight:700; margin-bottom:0.75rem;">
+          Compra realizada con éxito
+        </h1>
+        <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:2.5rem;">
+          Tu pedido ha sido procesado correctamente. Recibirás un correo con
+          la confirmación y los detalles de tu compra.
+        </p>
+
+        <div style="text-align:left; margin-bottom:2rem;">
+          <h2 style="font-size:1.1rem; font-weight:600; margin-bottom:1rem;
+            padding-bottom:0.75rem; border-bottom:0.0625rem solid var(--border);">
+            Resumen de la compra
+          </h2>
+
+          <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+            <thead>
+              <tr style="background-color:var(--bg-light);">
+                <th style="text-align:left; padding:0.65rem 1rem; color:var(--text-muted); font-weight:600;">Producto</th>
+                <th style="text-align:center; padding:0.65rem 1rem; color:var(--text-muted); font-weight:600;">Cantidad</th>
+                <th style="text-align:right; padding:0.65rem 1rem; color:var(--text-muted); font-weight:600;">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody id="confirmation-items">
+              <!-- Items generados dinámicamente -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" style="padding:0.75rem 1rem; font-weight:700; border-top:0.0625rem solid var(--border);">
+                  Total
+                </td>
+                <td style="padding:0.75rem 1rem; font-weight:700; color:var(--primary);
+                  text-align:right; border-top:0.0625rem solid var(--border);" id="confirmation-total">
+                  ₡0
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- ACCIONES -->
+        <div style="display:flex; gap:1rem; justify-content:center;">
+          <a href="catalog.html" class="btn btn--outline" style="width:auto; padding:0.75rem 2rem;">
+            Volver al catálogo
+          </a>
+          <a href="index.html" class="btn btn--primary" style="width:auto; padding:0.75rem 2rem;">
+            Ir al inicio
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  
+  <footer class="footer">
+    <p>© 2025 Lyfter Pet Store — Todos los derechos reservados.</p>
+  </footer>
+
+
+  <script src="js/utils/session.js"></script>
+  <script src="js/utils/ui.js"></script>
+  <script src="js/pages/checkout.js"></script>
+
+</body>
+</html>

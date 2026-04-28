@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lyfter Pet Store</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages/home.css" />
+</head>
+<body>
+
+  
+  <nav class="navbar">
+    <span class="navbar__logo">🐾 Lyfter Pet Store</span>
+    <ul class="navbar__links" id="nav-links">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="catalog.html">Productos</a></li>
+      <li id="nav-admin" style="display:none"><a href="admin.html">Administración</a></li>
+      <li id="nav-user" style="display:none"><span id="nav-username"></span></li>
+      <li id="nav-logout" style="display:none"><a href="#" id="btn-logout">Cerrar sesión</a></li>
+      <li id="nav-login"><a href="login.html" class="btn btn--primary">Iniciar sesión</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    
+    <section class="hero">
+      <div class="hero__emoji">🐶🐱🐰</div>
+      <h1 class="hero__title">Bienvenido a <span>Lyfter Pet Store</span></h1>
+      <p class="hero__subtitle">
+        Tu destino online para encontrar los mejores productos para tus queridas mascotas:
+        desde alimentos y juguetes hasta accesorios y salud.
+      </p>
+      <div class="hero__actions">
+        <a href="catalog.html" class="btn btn--primary">Ver productos</a>
+        <a href="register.html" class="btn btn--outline">Crear cuenta</a>
+      </div>
+    </section>
+
+    
+    <section class="features">
+      <h2 class="features__title">¿Por qué elegirnos?</h2>
+      <div class="features__grid">
+        <div class="feature-card">
+          <div class="feature-card__icon">🚚</div>
+          <h3 class="feature-card__title">Envío rápido</h3>
+          <p class="feature-card__desc">Recibí tus productos en la puerta de tu casa en tiempo récord.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">⭐</div>
+          <h3 class="feature-card__title">Calidad garantizada</h3>
+          <p class="feature-card__desc">Solo trabajamos con las mejores marcas para el bienestar de tu mascota.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">💬</div>
+          <h3 class="feature-card__title">Soporte 24/7</h3>
+          <p class="feature-card__desc">Nuestro equipo está disponible para ayudarte en cualquier momento.</p>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="cta">
+      <h2 class="cta__title">¿Listo para consentir a tu mascota?</h2>
+      <p class="cta__subtitle">Registrate gratis y comenzá a comprar hoy mismo.</p>
+      <a href="register.html" class="btn btn--outline">Comenzar ahora</a>
+    </section>
+
+  </main>
+
+  
+  <footer class="footer">
+    <p>© 2025 Lyfter Pet Store — Todos los derechos reservados.</p>
+  </footer>
+
+  
+  <script src="js/utils/mock-data.js"></script>
+  <script src="js/utils/session.js"></script>
+  <script src="js/utils/ui.js"></script>
+  <script src="js/api/config.js"></script>
+  <script src="js/pages/home.js"></script>
+
+</body>
+</html>
