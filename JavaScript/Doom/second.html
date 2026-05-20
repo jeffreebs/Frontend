@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Input DOM </title>
+    </head>
+    <body>
+        <input type = "text" id = "input" placeholder="Write something">
+        <button id = "show">show</button>
+        <p id = "text"></p>
+
+
+        <script>
+            const input = document.getElementById("input");
+            const btnShow = document.getElementById("show");
+            const text = document.getElementById("text"); 
+
+
+            btnShow.addEventListener ("click", function(){
+                text.innerHTML = input.value;
+                input.value = " ";
+            });
+        </script>
+    </body>
+</html>

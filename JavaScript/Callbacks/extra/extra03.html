@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chance background</title>
+    </head>
+   <body>
+        <p id="text">This text chance the color</p>
+        <button id = "btn-chance">Add</button>
+        <div id="box" style="width:200px; height:200px;"></div>
+
+
+        <script>
+            const colors = ['#FF5733', '#33FF57', '#3357FF', '#F5FF33', '#FF33F6'];
+            const parrafo = document.getElementById("text");
+            const btnChance = document.getElementById("btn-chance");
+            const box = document.getElementById("box");
+
+            function showColor(color){
+                parrafo.innerHTML = color;
+            }
+            
+            
+            btnChance.addEventListener("click", function(){
+                let indice = Math.floor(Math.random() * 6);
+                let colorAleatorio = colors[indice];
+                box.style.backgroundColor = colorAleatorio;
+                showColor(colorAleatorio)
+
+            });
+
+            
+
+        </script>
+    </body>
+</html>

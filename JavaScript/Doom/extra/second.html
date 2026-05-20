@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sum and rest</title>
+    </head>
+   <body>
+        <p id="text">Sum and rest</p>
+        <button id = "btn-sum">sum</button>
+        <button id = "btn-rest">rest</button>
+
+
+        <script>
+            const text= document.getElementById("text");
+            const btnSum = document.getElementById ("btn-sum");
+            const btnRest = document.getElementById ("btn-rest");
+
+            let cont= 0;
+
+            btnSum.addEventListener("click", function (){
+                cont= cont +1;
+                text.innerHTML= cont;
+
+            });
+
+            btnRest.addEventListener("click", function(){
+                if (cont > 0) {
+                    cont= cont - 1;
+                    text.innerHTML= cont;
+                }    
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <form action="https://dummyjson.com/test" method="POST">
+    <h1>Book your stay</h1>
+    <p>Complete the information</p>
+
+    <label for="full_name">Full name </label>
+    <br />
+    <input type="text" id="full_name" name="full_name" />
+    <br />
+    <label for="email">Email</label>
+    <br />
+    <input type="text" id="email" name="email" />
+    <br />
+    <br />
+    
+    <label for="Checkin">Checkin</label>
+    <br />
+    <input type="date" id="Checkin" name="Checkin">
+    <br/>
+    <label for="Checkout">Checkout</label>
+    <br />
+    <input type="date" id="Checkout" name="Checkout">
+    <br/>
+    <br/>
+    <p>Choose your room</p>
+    <input type="radio" id="Estandart" name="type" value="Estandart">
+    <label for="Estandart">Estandart</label><br>
+
+    <input type="radio" id="Premium" name="type" value="Premium">
+    <label for="Premium">Premium</label>
+    <br>
+    <input type="radio" id="Suite" name="type" value="Suite">
+    <label for="Suite">Suite</label>
+    <br>
+    <p>Add aditional service</p>
+
+    <input type="checkbox" id="Breakfast" name="opcion1" value="Breakfast">
+    <label for="Breakfast">Breakfast</label>
+    <br>
+    <input type="checkbox" id="Parking" name="opcion2" value="Parking">
+    <label for="Parking">Parking</label>
+    <br>
+    <input type="checkbox" id="Wifi" name="opcion3" value="Wifi">
+    <label for="Wifi">Wifi</label>
+    <br>
+
+  </form>
+  <br />
+  <br />
+    <form action="confirmation.html" method="get">
+        <button type="submit">Send</button>
+    </form>
+</html>

@@ -1,0 +1,38 @@
+
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+
+.menu {
+  background-color: #222;
+  width: 100%;
+}
+
+
+.menu-lista {
+  list-style: none;        
+  display: flex;          
+  justify-content: center; 
+}
+
+
+.menu-link {
+  display: block;
+  color: white;
+  text-decoration: none;   
+  padding: 18px 30px;      
+  font-size: 15px;
+  letter-spacing: 1px;
+  transition: background-color 0.3s;
+}
+
+
+.menu-link:hover {
+  background-color: #e67e22;
+  color: #fff;
+}
+
+

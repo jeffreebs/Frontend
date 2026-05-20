@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario</title>
+</head>
+<body>
+    <form>
+        <label>Correo:</label><br>
+        <input type="email" id="email" placeholder="Correo"><br><br>
+
+        <label>Contraseña:</label><br>
+        <input type="password" id="password" placeholder="Contraseña"><br><br>
+
+        <label>Nombre:</label><br>
+        <input type="text" id="nombre" placeholder="Nombre"><br><br>
+
+        <label>Apellidos:</label><br>
+        <input type="text" id="apellidos" placeholder="Apellidos"><br><br>
+
+        <label>¿Eres empleado?</label><br>
+        <input type="radio" name="empleado" id="si" value="si"> Sí
+        <input type="radio" name="empleado" id="no" value="no"> No<br><br>
+
+        <input type="text" id="empleo" placeholder="Lugar de empleo" style="display:none"><br>
+    </form>
+
+    <script>
+        const radioSi = document.getElementById("si");
+        const radioNo = document.getElementById("no");
+        const empleo = document.getElementById("empleo");
+
+        radioSi.addEventListener("change", function(){
+            empleo.style.display = "block"; 
+        });
+
+        radioNo.addEventListener("change", function(){
+            empleo.style.display = "none"; 
+        });
+    </script>
+</body>
+</html>

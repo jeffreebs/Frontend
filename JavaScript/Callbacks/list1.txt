@@ -1,0 +1,17 @@
+
+const list1 = [
+  "One",
+  "Red",
+  "I",
+  "Test",
+  "Blue",
+  "Three",
+  "Like",
+  "Dog",
+  "Sea",
+  "Green",
+  "Luigi",
+  "Drawing",
+  "Books",
+  "Pizza",
+];

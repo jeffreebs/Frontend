@@ -1,0 +1,56 @@
+/* El body es toda la página — como el lienzo donde pintás */
+body {
+    font-family: Arial, sans-serif; /* tipo de letra */
+    background-color: #f0f2f5;      /* color de fondo gris clarito */
+    display: flex;                   /* flex permite centrar cosas fácilmente */
+    justify-content: center;         /* centra horizontalmente */
+    align-items: center;             /* centra verticalmente */
+    height: 100vh;                   /* 100vh = altura completa de la pantalla */
+    margin: 0;                       /* quita el espacio extra del navegador */
+}
+
+/* La tarjeta blanca que contiene el formulario */
+.card {
+    background-color: white;         /* fondo blanco */
+    padding: 40px;                   /* espacio adentro de la tarjeta */
+    border-radius: 12px;             /* esquinas redondeadas */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* sombra suave */
+    width: 400px;                    /* ancho fijo */
+}
+
+/* Todos los inputs */
+input {
+    width: 100%;                     /* ocupa todo el ancho */
+    padding: 12px;                   /* espacio adentro */
+    margin: 8px 0;                   /* espacio arriba y abajo */
+    border: 1px solid #ddd;          /* borde gris clarito */
+    border-radius: 8px;              /* esquinas redondeadas */
+    font-size: 16px;                 /* tamaño de letra */
+    box-sizing: border-box;          /* evita que se salga del contenedor */
+}
+
+/* El botón */
+button {
+    width: 100%;                     /* ocupa todo el ancho */
+    padding: 12px;                   /* espacio adentro */
+    background-color: #4CAF50;       /* color verde */
+    color: white;                    /* texto blanco */
+    border: none;                    /* sin borde */
+    border-radius: 8px;              /* esquinas redondeadas */
+    font-size: 16px;                 /* tamaño de letra */
+    cursor: pointer;                 /* cursor de manito al pasar */
+    margin-top: 16px;                /* espacio arriba */
+}
+
+/* Efecto hover del botón — cuando pasás el mouse encima */
+button:hover {
+    background-color: #45a049;       /* verde un poco más oscuro */
+}
+
+/* El párrafo de mensajes */
+#mensaje {
+    margin-top: 12px;                /* espacio arriba */
+    font-size: 14px;                 /* letra más pequeña */
+    color: red;                      /* rojo para errores */
+    text-align: center;              /* centrado */
+}

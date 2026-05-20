@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <form action="https://dummyjson.com/test" method="POST">
+    <h1>Ejerce tu derecho y elije nuestro proximo Presidente!</h1>
+    <p>Sal a votar y cuida tu patria!</p>
+
+    <label for="full_name">Nombre Completo </label>
+    <br />
+    <input type="text" id="full_name" name="full_name" />
+    <br />
+    <label for="email">Correo Electronico</label>
+    <br />
+    <input type="text" id="email" name="email" />
+    <br />
+    <label for="ID">Cedula</label>
+    <br />
+    <input type="text" id="ID" name="ID" />
+    <br />
+    <label for="Phone">Numero de Telefono</label>
+    <br />
+    <input type="text" id="Phone" name="Phone" />
+    <br />
+  </form>
+  <label for="type">Elije tu candidato</label>
+  <br />
+  <select name="type" id="type">
+    <option hidden>Elije una opción</option>
+    <option value="question">Candidato#1</option>
+    <option value="suggestion">Candidato#2</option>
+    <option value="suggestion">Candidato#3</option>
+  </select>
+  <br />
+  <label for="message">Gracias por votar</label>
+  <br />
+  <textarea id="message" name="message"></textarea>
+  <br />
+
+  <input type="submit" value="Send my message" />
+</html>
