@@ -7,9 +7,9 @@ function Header( {setPagina, paginaActual} ) {
         <h1>PawStore</h1>
         <nav>
             <ul>
-               <li><a href="#" className={paginaActual === 'inicio' ? 'activo' : ''} onClick={() => setPagina('inicio')}>Inicio</a></li>
-               <li><a href="#" className={paginaActual === 'catalogo' ? 'activo' : ''} onClick={() => setPagina('catalogo')}>Catalogo</a></li>
-               <li><a href="#" className={paginaActual === 'contacto' ? 'activo' : ''} onClick={() => setPagina('contacto')}>Contacto</a></li>
+               <li><button  className={paginaActual === 'inicio' ? 'activo' : ''} onClick={() => setPagina('inicio')}>Inicio</button></li>
+               <li><button  className={paginaActual === 'catalogo' || paginaActual === 'detalle' ? 'activo' : ''} onClick={() => setPagina('catalogo')}>Catalogo</button></li>
+               <li><button  className={paginaActual === 'contacto' ? 'activo' : ''} onClick={() => setPagina('contacto')}>Contacto</button></li>
                 
             </ul>
         </nav>
