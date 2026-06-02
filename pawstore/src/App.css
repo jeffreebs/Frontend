@@ -189,3 +189,35 @@
   color: white;
   text-decoration: underline;
 }
+
+
+/* Formularios */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+  margin-top: 24px;
+}
+
+form label {
+  font-weight: 500;
+  color: #333;
+}
+
+form input, form textarea {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+form button {
+  padding: 10px 24px;
+  background: #5c35d4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: fit-content;
+}

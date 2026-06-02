@@ -1,7 +1,7 @@
-import products from '../data/products.json'
+
 import ProductCard from '../components/ProductCard'
 
-function CatalogPage({setPagina, setProducto}) {
+function CatalogPage({setPagina, setProducto, products}) {
     console.log(products)
     return (
       <main>

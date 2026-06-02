@@ -10,6 +10,7 @@ function Header( {setPagina, paginaActual} ) {
                <li><button  className={paginaActual === 'inicio' ? 'activo' : ''} onClick={() => setPagina('inicio')}>Inicio</button></li>
                <li><button  className={paginaActual === 'catalogo' || paginaActual === 'detalle' ? 'activo' : ''} onClick={() => setPagina('catalogo')}>Catalogo</button></li>
                <li><button  className={paginaActual === 'contacto' ? 'activo' : ''} onClick={() => setPagina('contacto')}>Contacto</button></li>
+               <li><button  className={paginaActual === 'admin' ? 'activo' : ''} onClick={() => setPagina('admin')}>Administración</button></li>
                 
             </ul>
         </nav>
