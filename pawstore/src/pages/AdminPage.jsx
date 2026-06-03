@@ -54,7 +54,7 @@ const handleAgregar = () => {
           ))}
         </tbody>
      </table>
-     <div>
+     <div className="admin-form">
         <h2>Agregar nuevo producto</h2>
         <label>Nombre</label>
         <input value={nuevoProducto.nombre} onChange={(e) => setNuevoProducto({...nuevoProducto, nombre: e.target.value})} />

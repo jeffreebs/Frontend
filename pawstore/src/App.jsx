@@ -20,19 +20,23 @@ function App() {
     setProducts (products.filter (p => p.id!== id))
   }
   const agregarProducto = (producto) => {
-    const nuevoId = products.length + 1
+    const nuevoId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1
     setProducts ([...products, {... producto, id: nuevoId}])
   }
   const editarProducto = (productoActualizado) =>  {
     setProducts ( products.map(p =>p.id === productoActualizado.id ? productoActualizado:p))
-  } 
+  }
   return (
     <div>
         <Header  setPagina ={setPaginaActual} paginaActual = {paginaActual}  />
         
         {paginaActual === 'inicio' && <HomePage setPagina={setPaginaActual} />}
         {paginaActual === 'catalogo' && <CatalogPage setPagina = {setPaginaActual} setProducto = {setProductoSeleccionado} products = {products} />}
-        {paginaActual === 'detalle' && <ProductDetail producto = {productoSeleccionado} setPagina = {setPaginaActual} />}
+        {paginaActual === 'detalle' && (
+          products.find(p => p.id === productoSeleccionado?.id)
+            ? <ProductDetail producto={products.find(p => p.id === productoSeleccionado.id)} setPagina={setPaginaActual} />
+            : setPaginaActual('catalogo')
+        )}
         {paginaActual === 'admin' && <AdminPage products={products} setPagina={setPaginaActual} eliminarProducto={eliminarProducto} agregarProducto={agregarProducto} setProductoSeleccionado={setProductoSeleccionado} />}
         {paginaActual === 'editar' && <EditarProducto producto={productoSeleccionado} editarProducto={editarProducto} setPagina={setPaginaActual} />}
         
