@@ -5,6 +5,7 @@ function LoginPage( {setUsuario, setPagina} ) {
         email: '',
         password: ''
         })
+    const [error, setError] = useState('')
 
     const handleLogin = async () => {
         const response = await fetch('http://127.0.0.1:5000/login', {
@@ -16,15 +17,22 @@ function LoginPage( {setUsuario, setPagina} ) {
         console.log(data)
         
         if (response.ok) {
-            setUsuario({ nombre: data.name, rol: data.role, token: data.token })
-            setPagina('catalogo')
+            setUsuario({ nombre: data.name, rol: data.role, token: data.token, id: data.user_id })
+            if (data.role === 'admin') {
+                setPagina('admin')
+                } else {
+                setPagina('catalogo')
+                }
         } else {
-            alert('Las credenciales proporcionadas no son válidas. Por favor verifica tu correo y contraseña.')
+            setError('Las credenciales proporcionadas no son válidas. Por favor verifica tu correo y contraseña.')
         }
     }
+
+
     return (
       <main>
         <h1>Iniciar sesión</h1>
+        {error && <p style={{color: 'red'}}>{error}</p>}
         <form>
             <label>Correo electrónico</label>
             <input 

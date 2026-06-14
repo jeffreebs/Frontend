@@ -1,5 +1,5 @@
 import { useState, useEffect} from 'react'
-import productsData from './data/products.json'
+
 import AdminPage from './pages/AdminPage'
 
 import './App.css'
@@ -16,28 +16,24 @@ import LoginPage from './pages/LoginPage'
 function App() {
   const [paginaActual, setPaginaActual] = useState('inicio')
   const [productoSeleccionado, setProductoSeleccionado] = useState(null)
-  const [products, setProducts] = useState(productsData)
+  const [products, setProducts] = useState([])
   const [usuario, setUsuario] = useState(null)
   useEffect(() => {
-    if (usuario?.token) {
-      fetch('http://127.0.0.1:5000/products', {
-        headers: { 'Authorization': `Bearer ${usuario.token}` }
+    fetch('http://127.0.0.1:5000/products')
+      .then(res => res.json())
+      .then(data => {
+        const normalized = data.data.map(p => ({
+          id: p.id,
+          nombre: p.name,
+          precio: p.price,
+          categoria: p.category,
+          imagen: p.image_url || p.imagen || 'https://via.placeholder.com/300x300.png?text=' + encodeURIComponent(p.name),
+          descripcion: p.description,
+          stock: p.stock
+        }))
+        setProducts(normalized)
       })
-        .then(res => res.json())
-        .then(data => {
-          const normalized = data.data.map(p => ({
-            id: p.id,
-            nombre: p.name,
-            precio: p.price,
-            categoria: p.category,
-            imagen: '',
-            descripcion: p.description,
-            stock: p.stock
-          }))
-          setProducts(normalized)
-        })
-    }
-  }, [usuario])
+  }, [])
   const eliminarProducto = async (id) => {
     await fetch(`http://127.0.0.1:5000/products/${id}`, {
       method: 'DELETE',
@@ -97,11 +93,17 @@ function App() {
             : setPaginaActual('catalogo')
         )}
         {paginaActual === 'admin' && (
+          !usuario
+            ? <main><p>Debes iniciar sesión para acceder a esta sección.</p></main>
+            : usuario.rol === 'admin'
+              ? <AdminPage products={products} setPagina={setPaginaActual} eliminarProducto={eliminarProducto} agregarProducto={agregarProducto} setProductoSeleccionado={setProductoSeleccionado} />
+              : <main><p>No tienes permiso para acceder a esta sección.</p></main>
+        )}
+        {paginaActual === 'editar' && (
           usuario && usuario.rol === 'admin'
-            ? <AdminPage products={products} setPagina={setPaginaActual} eliminarProducto={eliminarProducto} agregarProducto={agregarProducto} setProductoSeleccionado={setProductoSeleccionado} />
+            ? <EditarProducto producto={productoSeleccionado} editarProducto={editarProducto} setPagina={setPaginaActual} />
             : <main><p>No tienes permiso para acceder a esta sección.</p></main>
         )}
-        {paginaActual === 'editar' && <EditarProducto producto={productoSeleccionado} editarProducto={editarProducto} setPagina={setPaginaActual} />}
         {paginaActual === 'login' && <LoginPage setUsuario={setUsuario} setPagina={setPaginaActual} />}
         
         <Footer />
