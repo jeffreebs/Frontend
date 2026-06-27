@@ -1,54 +1,47 @@
-import {useState} from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useApp } from '../context/AppContext'
 
-function LoginPage( {setUsuario, setPagina} ) {
-    const [form, setForm] = useState({
-        email: '',
-        password: ''
-        })
-    const [error, setError] = useState('')
+function LoginPage() {
+  const [form, setForm] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
+  const { setUsuario } = useApp()
+  const navigate = useNavigate()
 
-    const handleLogin = async () => {
-        const response = await fetch('http://127.0.0.1:5000/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form)
-        })
-        const data = await response.json()
-        console.log(data)
-        
-        if (response.ok) {
-            setUsuario({ nombre: data.name, rol: data.role, token: data.token, id: data.user_id })
-            if (data.role === 'admin') {
-                setPagina('admin')
-                } else {
-                setPagina('catalogo')
-                }
-        } else {
-            setError('Las credenciales proporcionadas no son válidas. Por favor verifica tu correo y contraseña.')
-        }
+  const handleLogin = async () => {
+    const response = await fetch('http://127.0.0.1:5000/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form)
+    })
+    const data = await response.json()
+    console.log(data)
+
+    if (response.ok) {
+      setUsuario({ nombre: data.name, rol: data.role, token: data.token, id: data.user_id })
+      if (data.role === 'admin') {
+        navigate('/admin')
+      } else {
+        navigate('/productos')
+      }
+    } else {
+      setError('Las credenciales proporcionadas no son válidas. Por favor verifica tu correo y contraseña.')
     }
-
-
-    return (
-      <main>
-        <h1>Iniciar sesión</h1>
-        {error && <p style={{color: 'red'}}>{error}</p>}
-        <form>
-            <label>Correo electrónico</label>
-            <input 
-            value={form.email} 
-            onChange={(e) => setForm({...form, email: e.target.value})} 
-            />
-            <label>Contraseña</label>
-            <input 
-            type="password"
-            value={form.password} 
-            onChange={(e) => setForm({...form, password: e.target.value})} 
-            />
-            <button type="button" onClick={handleLogin}>Ingresar</button>
-        </form>
-      </main>
-    )
   }
+
+  return (
+    <main>
+      <h1>Iniciar sesión</h1>
+      {error && <p style={{color: 'red'}}>{error}</p>}
+      <form>
+        <label>Correo electrónico</label>
+        <input value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
+        <label>Contraseña</label>
+        <input type="password" value={form.password} onChange={(e) => setForm({...form, password: e.target.value})} />
+        <button type="button" onClick={handleLogin}>Ingresar</button>
+      </form>
+    </main>
+  )
+}
 
 export default LoginPage

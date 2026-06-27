@@ -1,14 +1,17 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useApp } from '../context/AppContext'
 
-function ProductDetail({ producto, setPagina, usuario }) {
-  const [productoDetalle, setProductoDetalle] = useState (producto)
-
+function ProductDetail() {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { agregarAlCarrito } = useApp()
+  const [productoDetalle, setProductoDetalle] = useState(null)
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/products/${producto.id}`)
+    fetch(`http://127.0.0.1:5000/products/${id}`)
       .then(res => res.json())
       .then(data => {
-        console.log('Detalle del backend:', data)
         const p = data.data
         setProductoDetalle({
           id: p.id,
@@ -20,8 +23,9 @@ function ProductDetail({ producto, setPagina, usuario }) {
           stock: p.stock
         })
       })
-  }, [producto.id])
+  }, [id])
 
+  if (!productoDetalle) return <p>Cargando...</p>
 
   return (
     <main className="detalle">
@@ -29,16 +33,13 @@ function ProductDetail({ producto, setPagina, usuario }) {
         <img src={productoDetalle.imagen} alt={productoDetalle.nombre} />
       </div>
       <div className="detalle-info">
-        <h2> {productoDetalle.nombre} </h2>
-        <p> {productoDetalle.precio} </p>
-        <p> {productoDetalle.categoria} </p>
-        <p> {productoDetalle.descripcion} </p>
-        <p>Más adelante aquí se podrá agregar este producto al carrito y completar la compra.</p>
-        <button onClick={ ()=>{
-        setPagina("catalogo")
-      }} >Volver al Catálogo</button>
+        <h2>{productoDetalle.nombre}</h2>
+        <p>{productoDetalle.precio}</p>
+        <p>{productoDetalle.categoria}</p>
+        <p>{productoDetalle.descripcion}</p>
+        <button onClick={() => agregarAlCarrito(productoDetalle)}>Agregar al carrito</button>
+        <button onClick={() => navigate('/productos')}>Volver al Catálogo</button>
       </div>
-      
     </main>
   )
 }

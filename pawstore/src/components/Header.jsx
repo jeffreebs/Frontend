@@ -1,25 +1,38 @@
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useApp } from '../context/AppContext'
 import '../App.css'
 
+function Header() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { usuario, setUsuario, carrito } = useApp()
 
-function Header( {setPagina, paginaActual, usuario, setUsuario} ) {
+  const cerrarSesion = () => {
+    setUsuario(null)
+    navigate('/')
+  }
+
   return (
     <header>
-        <h1>PawStore</h1>
-        <nav>
-            <ul>
-               <li><button  className={paginaActual === 'inicio' ? 'activo' : ''} onClick={() => setPagina('inicio')}>Inicio</button></li>
-               <li><button  className={paginaActual === 'catalogo' || paginaActual === 'detalle' ? 'activo' : ''} onClick={() => setPagina('catalogo')}>Productos</button></li>
-               <li><button  className={paginaActual === 'contacto' ? 'activo' : ''} onClick={() => setPagina('contacto')}>Contacto</button></li>
-               <li><button  className={paginaActual === 'admin' ? 'activo' : ''} onClick={() => setPagina('admin')}>Administración</button></li>
-               {usuario 
-                  ? <li><span>Sesión iniciada como: {usuario.nombre}</span> <button onClick={() => { setUsuario(null); setPagina('inicio') }}>Cerrar sesión</button></li>
-                  : <li><button className={paginaActual === 'login' ? 'activo' : ''} onClick={() => setPagina('login')}>Iniciar sesión</button></li>
-                } 
-            </ul>
-        </nav>
-        
+      <h1>PawStore</h1>
+      <nav>
+        <ul>
+          <li><button className={location.pathname === '/' ? 'activo' : ''} onClick={() => navigate('/')}>Inicio</button></li>
+          <li><button className={location.pathname.startsWith('/productos') ? 'activo' : ''} onClick={() => navigate('/productos')}>Productos</button></li>
+          <li><button className={location.pathname === '/contacto' ? 'activo' : ''} onClick={() => navigate('/contacto')}>Contacto</button></li>
+          <li><button className={location.pathname === '/admin' ? 'activo' : ''} onClick={() => navigate('/admin')}>Administración</button></li>
+          <li>
+            <button onClick={() => navigate('/carrito')}>
+              Carrito {carrito.length > 0 && `(${carrito.length})`}
+            </button>
+          </li>
+          {usuario
+            ? <li><span>Sesión iniciada como: {usuario.nombre}</span> <button onClick={cerrarSesion}>Cerrar sesión</button></li>
+            : <li><button className={location.pathname === '/login' ? 'activo' : ''} onClick={() => navigate('/login')}>Iniciar sesión</button></li>
+          }
+        </ul>
+      </nav>
     </header>
-     
   )
 }
 
