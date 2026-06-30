@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { getProducts, createProduct, updateProduct, deleteProduct } from '../services/api'
 
 function AdminPage() {
   const [products, setProducts] = useState([])
@@ -11,23 +12,22 @@ function AdminPage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/products')
-      .then(res => res.json())
-      .then(data => {
-        const normalized = data.data.map(p => ({
-          id: p.id, nombre: p.name, precio: p.price,
-          categoria: p.category, imagen: p.image_url || '', descripcion: p.description, stock: p.stock
-        }))
-        setProducts(normalized)
-      })
+    getProducts().then(data => {
+      const normalized = data.data.map(p => ({
+        id: p.id, nombre: p.name, precio: p.price,
+        categoria: p.category, imagen: p.image_url || '', descripcion: p.description, stock: p.stock
+      }))
+      setProducts(normalized)
+    })
   }, [])
 
   const eliminarProducto = async (id) => {
-    await fetch(`http://127.0.0.1:5000/products/${id}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${usuario.token}` }
-    })
-    setProducts(products.filter(p => p.id !== id))
+    const { ok } = await deleteProduct(id, usuario.token)
+    if (ok) {
+      setProducts(products.filter(p => p.id !== id))
+    } else {
+      alert('Error al eliminar el producto.')
+    }
   }
 
   const agregarProducto = async () => {
@@ -35,19 +35,16 @@ function AdminPage() {
       alert('Por favor completa los campos requeridos.')
       return
     }
-    const response = await fetch('http://127.0.0.1:5000/products', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${usuario.token}` },
-      body: JSON.stringify({
-        name: nuevoProducto.nombre, description: nuevoProducto.descripcion,
-        price: nuevoProducto.precio, category: nuevoProducto.categoria,
-        stock: nuevoProducto.stock, sku: `SKU-${Date.now()}`, is_active: true
-      })
-    })
-    const data = await response.json()
-    if (response.ok) {
+    const { data, ok } = await createProduct({
+      name: nuevoProducto.nombre, description: nuevoProducto.descripcion,
+      price: nuevoProducto.precio, category: nuevoProducto.categoria,
+      stock: nuevoProducto.stock, sku: `SKU-${Date.now()}`, is_active: true
+    }, usuario.token)
+    if (ok) {
       setProducts([...products, { ...nuevoProducto, id: data.product_id }])
       setNuevoProducto({ nombre: '', descripcion: '', precio: '', categoria: '', imagen: '', stock: '' })
+    } else {
+      alert('Error al agregar el producto.')
     }
   }
 

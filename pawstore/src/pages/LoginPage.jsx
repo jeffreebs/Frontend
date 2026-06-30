@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { login } from '../services/api'
 import { useApp } from '../context/AppContext'
 
 function LoginPage() {
@@ -9,15 +10,8 @@ function LoginPage() {
   const navigate = useNavigate()
 
   const handleLogin = async () => {
-    const response = await fetch('http://127.0.0.1:5000/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form)
-    })
-    const data = await response.json()
-    console.log(data)
-
-    if (response.ok) {
+    const { data, ok } = await login(form)
+    if (ok) {
       setUsuario({ nombre: data.name, rol: data.role, token: data.token, id: data.user_id })
       if (data.role === 'admin') {
         navigate('/admin')

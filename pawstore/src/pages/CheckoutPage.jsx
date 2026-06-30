@@ -1,16 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { createCart, addCartItem, checkout } from '../services/api'
+import { formatearPrecio } from '../utils/formato'
+
 
 function CheckoutPage() {
   const { carrito, vaciarCarrito, usuario } = useApp()
   const navigate = useNavigate()
-  const [form, setForm] = useState({
-    nombre: '',
-    email: '',
-    direccion: ''
-  })
+  const [form, setForm] = useState({ nombre: '', email: '', direccion: '' })
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (!usuario) {
+      navigate('/login')
+      return
+    }
+    if (carrito.length === 0) {
+      navigate('/carrito')
+    }
+  }, [usuario, carrito])
 
   const total = carrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0)
 
@@ -20,59 +30,48 @@ function CheckoutPage() {
       return
     }
 
+    setLoading(true)
+    setError('')
+
     try {
-      const cartRes = await fetch('http://127.0.0.1:5000/carts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${usuario?.token}`
-        },
-        body: JSON.stringify({ user_id: usuario?.id })
-      })
-      const cartData = await cartRes.json()
-      const cart_id = cartData.cart_id
+      const { data: cartData, ok: cartOk } = await createCart(usuario?.id, usuario?.token)
+  if (!cartOk) {
+    setError('Ocurrió un problema al procesar tu compra. Por favor intenta de nuevo.')
+    setLoading(false)
+    return
+  }
+  const cart_id = cartData.cart_id
 
-      for (const item of carrito) {
-        await fetch(`http://127.0.0.1:5000/carts/${cart_id}/items`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${usuario?.token}`
-          },
-          body: JSON.stringify({
-            product_id: item.id,
-            quantity: item.cantidad
-          })
-        })
-      }
+  for (const item of carrito) {
+    const { ok: itemOk } = await addCartItem(cart_id, { product_id: item.id, quantity: item.cantidad }, usuario?.token)
+    if (!itemOk) {
+      setError('Ocurrió un problema al procesar tu compra. Por favor intenta de nuevo.')
+      setLoading(false)
+      return
+    }
+  }
 
-      const response = await fetch('http://127.0.0.1:5000/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${usuario?.token}`
-        },
-        body: JSON.stringify({
-          cart_id: cart_id,
-          user_id: usuario?.id,
-          billing_info: {
-            billing_name: form.nombre,
-            billing_address: form.direccion,
-            billing_tax_id: form.email
-          }
-        })
-      })
-      const data = await response.json()
-      
+  const { ok: checkoutOk } = await checkout({
+    cart_id: cart_id,
+    user_id: usuario?.id,
+    billing_info: {
+      billing_name: form.nombre,
+      billing_address: form.direccion,
+      billing_tax_id: form.email,
+      billing_email: form.email
+    }
+  }, usuario?.token)
 
-      if (response.ok) {
+      if (checkoutOk) {
         vaciarCarrito()
-        navigate('/confirmacion')
+        navigate('/confirmacion', { state: { compraExitosa: true } })
       } else {
         setError('Ocurrió un problema al procesar tu compra. Por favor intenta de nuevo.')
       }
     } catch {
       setError('Ocurrió un problema al procesar tu compra. Por favor intenta de nuevo.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -83,10 +82,10 @@ function CheckoutPage() {
       <h2>Resumen de la compra</h2>
       {carrito.map(item => (
         <div key={item.id}>
-          <p>{item.nombre} x{item.cantidad} — {item.precio * item.cantidad}</p>
+          <p>{item.nombre} — Precio unitario: {formatearPrecio(item.precio)} x{item.cantidad} — Subtotal: {formatearPrecio(item.precio * item.cantidad)}</p>
         </div>
       ))}
-      <p>Total: {total}</p>
+      <p>Total: {formatearPrecio(total)}</p>
       <h2>Información de envío</h2>
       {error && <p style={{color: 'red'}}>{error}</p>}
       <label>Nombre completo</label>
@@ -95,8 +94,10 @@ function CheckoutPage() {
       <input value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
       <label>Dirección de envío</label>
       <input value={form.direccion} onChange={(e) => setForm({...form, direccion: e.target.value})} />
-      <button onClick={handleConfirmar}>Confirmar compra</button>
-      <button onClick={() => navigate('/carrito')}>Cancelar</button>
+      <button onClick={handleConfirmar} disabled={loading}>
+        {loading ? 'Procesando...' : 'Confirmar compra'}
+      </button>
+      <button onClick={() => navigate('/carrito')} disabled={loading}>Cancelar</button>
     </main>
   )
 }

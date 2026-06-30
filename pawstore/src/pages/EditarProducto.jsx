@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { getProductById, updateProduct } from '../services/api'
 
 function EditarProducto() {
   const { id } = useParams()
@@ -11,20 +12,18 @@ function EditarProducto() {
   })
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/products/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        const p = data.data
-        setForm({
-          id: p.id,
-          nombre: p.name,
-          descripcion: p.description,
-          precio: p.price,
-          categoria: p.category,
-          imagen: p.image_url || '',
-          stock: p.stock
-        })
+    getProductById(id).then(data => {
+      const p = data.data
+      setForm({
+        id: p.id,
+        nombre: p.name,
+        descripcion: p.description,
+        precio: p.price,
+        categoria: p.category,
+        imagen: p.image_url || '',
+        stock: p.stock
       })
+    })
   }, [id])
 
   const handleGuardar = async () => {
@@ -32,19 +31,16 @@ function EditarProducto() {
       alert('Por favor completa todos los campos.')
       return
     }
-    await fetch(`http://127.0.0.1:5000/products/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${usuario.token}`
-      },
-      body: JSON.stringify({
-        name: form.nombre, description: form.descripcion,
-        price: form.precio, category: form.categoria,
-        stock: form.stock, is_active: true
-      })
-    })
-    navigate('/admin')
+    const { ok } = await updateProduct(id, {
+      name: form.nombre, description: form.descripcion,
+      price: form.precio, category: form.categoria,
+      stock: form.stock, is_active: true
+    }, usuario.token)
+    if (ok) {
+      navigate('/admin')
+    } else {
+      alert('Error al guardar los cambios.')
+    }
   }
 
   return (
