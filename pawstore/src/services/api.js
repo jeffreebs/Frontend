@@ -2,12 +2,12 @@ const API_URL = import.meta.env.VITE_API_URL
 
 export const getProducts = async () => {
   const res = await fetch(`${API_URL}/products`)
-  return res.json()
+  return { data: await res.json(), ok: res.ok }
 }
 
 export const getProductById = async (id) => {
   const res = await fetch(`${API_URL}/products/${id}`)
-  return res.json()
+  return { data: await res.json(), ok: res.ok }
 }
 
 export const login = async (form) => {

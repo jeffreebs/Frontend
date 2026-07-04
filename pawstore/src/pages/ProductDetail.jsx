@@ -11,8 +11,8 @@ function ProductDetail() {
   const [noEncontrado, setNoEncontrado] = useState(false)
 
   useEffect(() => {
-    getProductById(id).then(data => {
-      if (!data.data) {
+    getProductById(id).then(({ data, ok }) => {
+      if (!ok || !data.data) {
         setNoEncontrado(true)
         return
       }

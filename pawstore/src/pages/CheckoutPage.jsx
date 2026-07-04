@@ -88,12 +88,12 @@ function CheckoutPage() {
       <p>Total: {formatearPrecio(total)}</p>
       <h2>Información de envío</h2>
       {error && <p style={{color: 'red'}}>{error}</p>}
-      <label>Nombre completo</label>
-      <input value={form.nombre} onChange={(e) => setForm({...form, nombre: e.target.value})} />
-      <label>Correo electrónico</label>
-      <input value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
-      <label>Dirección de envío</label>
-      <input value={form.direccion} onChange={(e) => setForm({...form, direccion: e.target.value})} />
+      <label htmlFor="nombre">Nombre completo</label>
+      <input id="nombre" value={form.nombre} onChange={(e) => setForm({...form, nombre: e.target.value})} />
+      <label htmlFor="email">Correo electrónico</label>
+      <input id="email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
+      <label htmlFor="direccion">Dirección de envío</label>
+      <input id="direccion" value={form.direccion} onChange={(e) => setForm({...form, direccion: e.target.value})} />
       <button onClick={handleConfirmar} disabled={loading}>
         {loading ? 'Procesando...' : 'Confirmar compra'}
       </button>
